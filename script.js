@@ -1,4 +1,4 @@
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY || "4707e76408294ec7a52c329e45bf69f1";
 const url = "https://newsapi.org/v2/everything?q=";
 
 window.addEventListener("load", () => fetchNews("Latest"));
