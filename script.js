@@ -1,23 +1,26 @@
-const API_KEY = "9ef9cc0a0afe47fea3879166619dcc5a";
-const BASE_URL = "https://newsapi.org/v2/top-headlines?q=India&sortBy=popularity";
+const API_KEY = "0316cea0510358b70fd7ac922e144e43";
+const BASE_URL = "https://gnews.io/api/v4/search?q=";
 
 function fetchNews(query = "latest") {
     document.getElementById("loading").style.display = "block";
-    fetch(`${BASE_URL}${query}&apiKey=${API_KEY}`)
+
+    fetch(`${BASE_URL}${query}&lang=en&country=us&token=${API_KEY}`)
         .then(response => response.json())
         .then(data => {
             document.getElementById("loading").style.display = "none";
-            if (!data.articles) {
-                console.error("No articles found:", data);
-                return;
-            }
             const newsContainer = document.getElementById("news-container");
             newsContainer.innerHTML = "";
+
+            if (!data.articles || data.articles.length === 0) {
+                newsContainer.innerHTML = "<p>No articles found.</p>";
+                return;
+            }
+
             data.articles.forEach(article => {
                 const newsCard = document.createElement("div");
                 newsCard.classList.add("news-card");
                 newsCard.innerHTML = `
-                    <img src="${article.urlToImage || 'placeholder.jpg'}" alt="News Image">
+                    <img src="${article.image || 'https://via.placeholder.com/600x400'}" alt="News Image">
                     <h2>${article.title}</h2>
                     <p>${article.description || "No description available."}</p>
                     <a href="${article.url}" target="_blank">Read More</a>
@@ -30,4 +33,5 @@ function fetchNews(query = "latest") {
             console.error("Error fetching news:", error);
         });
 }
+
 window.onload = () => fetchNews();
