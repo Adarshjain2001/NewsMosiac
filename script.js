@@ -7,15 +7,19 @@ function fetchNews(query = "latest") {
         .then(response => response.json())
         .then(data => {
             document.getElementById("loading").style.display = "none";
+            if (!data.articles) {
+                console.error("No articles found:", data);
+                return;
+            }
             const newsContainer = document.getElementById("news-container");
             newsContainer.innerHTML = "";
             data.articles.forEach(article => {
                 const newsCard = document.createElement("div");
                 newsCard.classList.add("news-card");
                 newsCard.innerHTML = `
-                    <img src="${article.urlToImage}" alt="News Image">
+                    <img src="${article.urlToImage || 'placeholder.jpg'}" alt="News Image">
                     <h2>${article.title}</h2>
-                    <p>${article.description}</p>
+                    <p>${article.description || "No description available."}</p>
                     <a href="${article.url}" target="_blank">Read More</a>
                 `;
                 newsContainer.appendChild(newsCard);
