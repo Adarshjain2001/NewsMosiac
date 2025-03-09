@@ -1,5 +1,5 @@
-const API_KEY = "4707e76408294ec7a52c329e45bf69f1";
-const BASE_URL = "https://newsapi.org/v2/everything?q=";
+const API_KEY = "9ef9cc0a0afe47fea3879166619dcc5a";
+const BASE_URL = "https://newsapi.org/v2/top-headlines?q=India&sortBy=popularity";
 
 function fetchNews(query = "latest") {
     document.getElementById("loading").style.display = "block";
